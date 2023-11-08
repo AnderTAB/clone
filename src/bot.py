@@ -245,9 +245,9 @@ class Bot:
         res = self.notes.data
         if len(res) > 1:
             for id, r in res.items():
-                print(r)
+                return r
         else:
-            print(res)
+            return res
 
     @_input_error
     def find_notes(self, args):
@@ -255,11 +255,11 @@ class Bot:
         found_notes = self.notes.find_note(key)
         if isinstance(found_notes, list):
             for record in found_notes:
-                print(record)
+                return record
         elif isinstance(found_notes, object):
-            print(found_notes)
+            return found_notes
         else:
-            print(f"No note with key: {key} found.")
+            return f"No note with key: {key} found."
 
     @_input_error
     def add_note(self, args):
@@ -267,7 +267,7 @@ class Bot:
         record = RecordNote()
         record.create_record(text)
         self.notes.add_record(record)
-        print(record)
+        return record
 
     @_input_error
     def delete_note(self, args):
@@ -275,26 +275,26 @@ class Bot:
         TITLE = " ".join(args)
         note = self.notes.find_note(TITLE)
         if isinstance(note, list):
-            print(f"Found {len(note)} with {TITLE}.\n")
+            return f"Found {len(note)} with {TITLE}.\n"
             for record in note:
                 self.notes.delete(record.id.text)
                 message += str(record)
                 message += "Note deleted \n"
-            print(message)
+            return message
         elif isinstance(note, object):
             self.notes.delete(TITLE)
             message += str(note)
             message += "Note deleted \n"
-            print(message)
+            return message
         else:
-            print(f"No note with title: {TITLE} found.")
+            return f"No note with title: {TITLE} found."
 
     @_input_error
     def change_note_title(self, args):
         TITLE, NEW_TITLE = args
         note = self.notes.find_note(TITLE)
         note.edit_title(NEW_TITLE)
-        print("Note Title changed \n")
+        return "Note Title changed \n"
 
     @_input_error
     def change_note_text(self, args):
@@ -305,7 +305,7 @@ class Bot:
         note.edit_note(new_text)
         message = str(note)
         message += "Note text changed \n"
-        print(message)
+        return message
 
     @_input_error
     def add_note_tags(self, args):
@@ -315,7 +315,7 @@ class Bot:
         note = self.notes.find_note(TITLE)
         note.add_tag(tags)
         t = " ".join(tags)
-        print(f"Note tag: {t} added \n")
+        return f"Note tag: {t} added \n"
 
     @_input_error
     def delete_note_tag(self, args):
@@ -324,7 +324,7 @@ class Bot:
         tag = " ".join(self.finder.find_tags_in_text(text))
         note = self.notes.find_note(TITLE)
         note.del_tag(tag)
-        print(f"Note tag: {tag} deleted")
+        return f"Note tag: {tag} deleted"
 
     @_input_error
     def change_note_tag(self, args):
@@ -335,7 +335,7 @@ class Bot:
         note.edit_tag(tag, new_tag)
         message = str(note)
         message += "Note tag changed"
-        print(message)
+        return message
 
     @_input_error
     def find_note_by_tag(self, args):
@@ -343,20 +343,20 @@ class Bot:
         res = self.notes.find_note_by_tag(tag)
         if isinstance(res, list):
             for id, r in res.items():
-                print(r)
+                return r
         elif isinstance(res, object):
-            print(res)
+            return res
         else:
-            print(f"No note with tag: {tag} found.")
+            return f"No note with tag: {tag} found."
 
     @_input_error
     def sort_note_by_tags(self, args):
         res = self.notes.sort_note_by_tag_amount()
         if len(res) > 1:
             for id, r in res.items():
-                print(r)
+                return r
         else:
-            print(res)
+            return res
 
 
 if __name__ == "__main__":
