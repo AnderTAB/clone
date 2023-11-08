@@ -255,7 +255,7 @@ class Bot:
         found_notes = self.notes.find_note(key)
         if isinstance(found_notes, list):
             for record in found_notes:
-                print(record)
+                return record
         elif isinstance(found_notes, object):
             return found_notes
         else:
@@ -275,7 +275,7 @@ class Bot:
         TITLE = " ".join(args)
         note = self.notes.find_note(TITLE)
         if isinstance(note, list):
-            print(f"Found {len(note)} with {TITLE}.\n")
+            return f"Found {len(note)} with {TITLE}.\n"
             for record in note:
                 self.notes.delete(record.id.text)
                 message += str(record)
@@ -343,7 +343,7 @@ class Bot:
         res = self.notes.find_note_by_tag(tag)
         if isinstance(res, list):
             for id, r in res.items():
-                print(r)
+                return r
         elif isinstance(res, object):
             return res
         else:
